@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión — Stage & Shears</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+<div class="login-page">
+  <div class="login-container">
+    <div class="login-logo">
+      <div class="login-logo-square">S</div>
+      <div class="login-logo-title">Stage / Shears</div>
+      <div class="login-logo-sub">Barbería · Belgrano</div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'success' if category == 'success' else 'error' if category == 'error' else 'info' }}" style="margin-bottom:16px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="login-form">
+      <h2>Iniciar Sesión</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="tu@email.com"
+            required
+            autocomplete="email"
+          >
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="••••••••"
+            required
+            autocomplete="current-password"
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+    </div>
+
+    <div class="login-demo">
+      <div class="login-demo-label">Accesos de demostración</div>
+      <div class="login-demo-item">
+        <span class="login-demo-role">Cliente</span>
+        <span class="login-demo-creds">lucas@demo.com / 1234</span>
+      </div>
+      <div class="login-demo-item">
+        <span class="login-demo-role">Barbero</span>
+        <span class="login-demo-creds">tito@demo.com / 1234</span>
+      </div>
+      <div class="login-demo-item">
+        <span class="login-demo-role">Admin</span>
+        <span class="login-demo-creds">admin@demo.com / 1234</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
