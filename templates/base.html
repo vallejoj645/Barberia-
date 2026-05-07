@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Stage & Shears — Barbería Belgrano{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-logo">S</div>
+      <div class="navbar-title">
+        <span class="navbar-title-main">Stage / Shears</span>
+        <span class="navbar-title-sub">Barbería · Belgrano</span>
+      </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <div class="navbar-center">
+      <a href="{{ url_for('client_dashboard') }}" class="view-toggle {% if request.path.startswith('/client') %}active{% endif %}">
+        Vista Cliente
+      </a>
+      <a href="{{ url_for('barber_agenda_view') }}" class="view-toggle {% if request.path.startswith('/barber') %}active{% endif %}">
+        Vista Barbero
+      </a>
+    </div>
+
+    <div class="navbar-right">
+      <span class="status-dot"></span>
+      <span class="navbar-date">{{ now_date_str }}</span>
+      <span style="color:#444">·</span>
+      <span class="navbar-user">{{ current_user.name }}</span>
+      <a href="{{ url_for('logout') }}" class="navbar-logout">Salir</a>
+    </div>
+    {% endif %}
+  </nav>
+
+  <div class="app-body">
+    {% if current_user.is_authenticated %}
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      {% if request.path.startswith('/client') %}
+      <!-- Client Sidebar -->
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Cliente</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="{{ url_for('client_dashboard') }}" class="{% if request.endpoint == 'client_dashboard' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">◈</span>
+                <span>Dashboard</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('client_book') }}" class="{% if request.endpoint == 'client_book' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">+</span>
+                <span>Nuevo Turno</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('client_appointments') }}" class="{% if request.endpoint == 'client_appointments' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">◷</span>
+                <span>Mis Turnos</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('client_loyalty') }}" class="{% if request.endpoint == 'client_loyalty' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">✦</span>
+                <span>Fidelidad</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('client_notifications') }}" class="{% if request.endpoint == 'client_notifications' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">◉</span>
+                <span>Notificaciones</span>
+              </span>
+              {% if unread_notifications > 0 %}
+              <span class="nav-badge">{{ unread_notifications }}</span>
+              {% else %}
+              <span class="nav-arrow">›</span>
+              {% endif %}
+            </a>
+          </li>
+        </ul>
+      </div>
+      {% else %}
+      <!-- Barber Sidebar -->
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Barbero</div>
+        <ul class="sidebar-nav">
+          <li>
+            <a href="{{ url_for('barber_agenda_view') }}" class="{% if request.endpoint in ('barber_agenda', 'barber_agenda_view') %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">◈</span>
+                <span>Agenda</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('barber_clients') }}" class="{% if request.endpoint in ('barber_clients', 'barber_client_detail') %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">◎</span>
+                <span>Clientes</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('barber_revenue') }}" class="{% if request.endpoint == 'barber_revenue' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">$</span>
+                <span>Ingresos</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('barber_services') }}" class="{% if request.endpoint == 'barber_services' %}active{% endif %}">
+              <span class="nav-left">
+                <span class="nav-icon">✂</span>
+                <span>Servicios</span>
+              </span>
+              <span class="nav-arrow">›</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      {% endif %}
+    </aside>
+    {% endif %}
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <!-- Flash Messages -->
+      {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ 'success' if category == 'success' else 'error' if category == 'error' else 'info' }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
