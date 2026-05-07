@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Mis Turnos — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Gestión</div>
+    <div class="page-title">Mis Turnos</div>
+  </div>
+  <a href="{{ url_for('client_book') }}" class="btn btn-primary">+ Nuevo Turno</a>
+</div>
+
+<!-- Upcoming -->
+<div style="margin-bottom:32px;">
+  <div class="card-label">Próximos Turnos</div>
+  {% if upcoming %}
+    {% for appt in upcoming %}
+    <div class="appointment-item">
+      <div class="appt-date-col">
+        <div class="appt-day-num">{{ appt.date.day }}</div>
+        <div class="appt-month">{{ MONTHS_ES_UPPER[appt.date.month - 1] }}</div>
+        <div class="appt-month" style="margin-top:2px;">{{ appt.date.year }}</div>
+      </div>
+      <div class="appt-info">
+        <div class="appt-time-service">
+          <div class="appt-time">{{ appt.time_slot }}</div>
+          <div class="appt-service-name">{{ appt.service.name }}</div>
+          <div class="appt-barber-info">con {{ appt.barber.name }}</div>
+        </div>
+        <div class="appt-price">{{ appt.service.price_formatted() }}</div>
+        <span class="badge {% if appt.status == 'confirmed' %}badge-red{% elif appt.status == 'pending' %}badge-gray{% else %}badge-outline{% endif %}">
+          {{ 'Confirmado' if appt.status == 'confirmed' else 'Pendiente' if appt.status == 'pending' else appt.status }}
+        </span>
+      </div>
+      <div class="appt-actions">
+        <button class="btn btn-outline btn-sm" onclick="toggleReschedule({{ appt.id }})">Reagendar</button>
+        <form method="POST" action="{{ url_for('client_cancel_appointment', appt_id=appt.id) }}" onsubmit="return confirm('¿Cancelar este turno?')">
+          <button type="submit" class="btn btn-outline btn-sm">Cancelar</button>
+        </form>
+      </div>
+    </div>
+    <!-- Reschedule inline form -->
+    <div class="reschedule-form" id="reschedule-{{ appt.id }}">
+      <form method="POST" action="{{ url_for('client_reschedule_appointment', appt_id=appt.id) }}" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+        <div class="form-group" style="margin:0;flex:1;min-width:150px;">
+          <label class="form-label">Nueva Fecha</label>
+          <input type="date" name="new_date" class="form-control" min="{{ today.isoformat() }}" required>
+        </div>
+        <div class="form-group" style="margin:0;flex:1;min-width:120px;">
+          <label class="form-label">Nuevo Horario</label>
+          <input type="time" name="new_time" class="form-control" step="1800" required>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-dark btn-sm">Confirmar</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="toggleReschedule({{ appt.id }})">Cancelar</button>
+        </div>
+      </form>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="card">
+      <div class="empty-state">No tenés turnos próximos. <a href="{{ url_for('client_book') }}" style="color:#E8302A;font-weight:700;">Reservar ahora →</a></div>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Past -->
+<div>
+  <div class="card-label">Historial</div>
+  {% if past %}
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Horario</th>
+            <th>Servicio</th>
+            <th>Barbero</th>
+            <th>Precio</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appt in past %}
+          <tr>
+            <td>
+              <span style="font-weight:600;">{{ appt.date.day }}</span>
+              <span style="color:#888;font-size:12px;"> {{ MONTHS_ES_UPPER[appt.date.month-1] }} {{ appt.date.year }}</span>
+            </td>
+            <td style="font-weight:600;">{{ appt.time_slot }}</td>
+            <td>{{ appt.service.name }}</td>
+            <td>{{ appt.barber.name }}</td>
+            <td style="font-weight:700;">{{ appt.service.price_formatted() }}</td>
+            <td>
+              {% if appt.status == 'completed' %}
+                <span class="badge badge-green">Completado</span>
+              {% elif appt.status == 'cancelled' %}
+                <span class="badge badge-outline">Cancelado</span>
+              {% elif appt.status == 'confirmed' %}
+                <span class="badge badge-red">Confirmado</span>
+              {% else %}
+                <span class="badge badge-gray">{{ appt.status }}</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="card">
+      <div class="empty-state">Sin historial todavía.</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
