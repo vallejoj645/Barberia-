@@ -2,4 +2,5 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "gunicorn app:app"
+startCommand = "gunicorn app:app --timeout 120"
+releaseCommand = "python release.py"
