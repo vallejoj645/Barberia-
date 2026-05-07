@@ -175,6 +175,48 @@ def login():
     return render_template('auth/login.html')
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip().lower()
+        password = request.form.get('password', '')
+        password2 = request.form.get('password2', '')
+
+        if not name or not email or not password:
+            flash('Completá todos los campos.', 'error')
+            return render_template('auth/register.html')
+
+        if password != password2:
+            flash('Las contraseñas no coinciden.', 'error')
+            return render_template('auth/register.html')
+
+        if len(password) < 4:
+            flash('La contraseña debe tener al menos 4 caracteres.', 'error')
+            return render_template('auth/register.html')
+
+        if User.query.filter_by(email=email).first():
+            flash('Ya existe una cuenta con ese email.', 'error')
+            return render_template('auth/register.html')
+
+        user = User(name=name, email=email, role='client')
+        user.set_password(password)
+        db.session.add(user)
+        db.session.flush()
+
+        loyalty = LoyaltyCard(client_id=user.id, total_cuts=0, free_cuts_redeemed=0)
+        db.session.add(loyalty)
+        db.session.commit()
+
+        login_user(user)
+        flash(f'¡Bienvenido, {name.split()[0]}!', 'success')
+        return redirect(url_for('client_dashboard'))
+
+    return render_template('auth/register.html')
+
+
 @app.route('/logout')
 @login_required
 def logout():
