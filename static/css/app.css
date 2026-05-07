@@ -1,0 +1,1358 @@
+/* ===== APP-SPECIFIC STYLES ===== */
+
+/* ===== LOGIN PAGE ===== */
+.login-page {
+  min-height: 100vh;
+  background: #0A0A0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-logo {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.login-logo-square {
+  width: 56px;
+  height: 56px;
+  background: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: #0A0A0A;
+  margin-bottom: 16px;
+}
+
+.login-logo-title {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-logo-sub {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555;
+  margin-top: 4px;
+}
+
+.login-form {
+  background: #111;
+  border: 1px solid #222;
+  padding: 32px;
+}
+
+.login-form h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.login-form .form-label {
+  color: #666;
+}
+
+.login-form .form-control {
+  background: #0A0A0A;
+  border: 1px solid #333;
+  color: #fff;
+}
+
+.login-form .form-control:focus {
+  border-color: #E8302A;
+}
+
+.login-form .form-control::placeholder {
+  color: #444;
+}
+
+.login-form .btn-primary {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 14px;
+  font-size: 12px;
+}
+
+.login-demo {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid #222;
+  background: #0a0a0a;
+}
+
+.login-demo-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.login-demo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 12px;
+}
+
+.login-demo-item:last-child {
+  border-bottom: none;
+}
+
+.login-demo-role {
+  color: #888;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.login-demo-creds {
+  color: #E8302A;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+/* ===== CLIENT DASHBOARD ===== */
+
+.next-appointment-card {
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.nac-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #EDEAE4;
+}
+
+.nac-body {
+  display: flex;
+  align-items: stretch;
+}
+
+.nac-date-block {
+  background: #0A0A0A;
+  color: #fff;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  text-align: center;
+}
+
+.nac-day-num {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.nac-month {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 4px;
+}
+
+.nac-barber-initials {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: #555;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.nac-info {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nac-time {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nac-duration-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: #EDEAE4;
+  color: #888;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+.nac-service {
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.nac-barber-name {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.nac-actions {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  border-left: 1px solid #EDEAE4;
+}
+
+/* ===== LOYALTY CARD ===== */
+.loyalty-card {
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
+  padding: 24px;
+}
+
+.loyalty-squares {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.loyalty-square {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #D5D1CB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.loyalty-square.filled {
+  background: #0A0A0A;
+  border-color: #0A0A0A;
+}
+
+.loyalty-square.star {
+  background: transparent;
+  border-color: #E8302A;
+}
+
+.loyalty-square svg {
+  width: 20px;
+  height: 20px;
+}
+
+.loyalty-counter {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.loyalty-footer {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-top: 1px solid #EDEAE4;
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+/* ===== REGULAR BARBER CARD ===== */
+.regular-barber-card {
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
+  padding: 24px;
+}
+
+.rb-barber {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.rb-info {
+  flex: 1;
+}
+
+.rb-name {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.rb-specialties {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.rb-stats {
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid #EDEAE4;
+  padding-top: 14px;
+}
+
+.rb-stat {
+  text-align: center;
+}
+
+.rb-stat-num {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.rb-stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #888;
+}
+
+/* ===== HISTORY TABLE ===== */
+.history-card {
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
+  margin-top: 0;
+}
+
+.history-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #EDEAE4;
+}
+
+/* ===== BOOKING FLOW ===== */
+.booking-steps {
+  display: flex;
+  gap: 0;
+  margin-bottom: 32px;
+  border: 1px solid #D5D1CB;
+  background: #fff;
+}
+
+.booking-step {
+  flex: 1;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-right: 1px solid #D5D1CB;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.booking-step:last-child {
+  border-right: none;
+}
+
+.booking-step.active {
+  background: #0A0A0A;
+  color: #fff;
+}
+
+.booking-step.done {
+  background: #f0faf5;
+  color: #2D6A4F;
+}
+
+.booking-step-num {
+  width: 24px;
+  height: 24px;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.booking-step.active .booking-step-num {
+  background: #E8302A;
+  border-color: #E8302A;
+}
+
+.booking-step.done .booking-step-num {
+  background: #2D6A4F;
+  border-color: #2D6A4F;
+  color: #fff;
+}
+
+.barber-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.barber-select-card {
+  border: 2px solid #D5D1CB;
+  background: #fff;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.barber-select-card:hover {
+  border-color: #888;
+}
+
+.barber-select-card.selected {
+  border-color: #E8302A;
+  background: #fff5f5;
+}
+
+.barber-select-card input[type="radio"] {
+  display: none;
+}
+
+.service-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.service-select-card {
+  border: 2px solid #D5D1CB;
+  background: #fff;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.service-select-card:hover {
+  border-color: #888;
+}
+
+.service-select-card.selected {
+  border-color: #E8302A;
+  background: #fff5f5;
+}
+
+.service-select-card input[type="radio"] {
+  display: none;
+}
+
+.service-price {
+  font-size: 22px;
+  font-weight: 800;
+  margin-top: 8px;
+  color: #E8302A;
+}
+
+.service-duration {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+.slots-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.slot-btn {
+  padding: 10px 16px;
+  border: 1px solid #D5D1CB;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.04em;
+}
+
+.slot-btn:hover {
+  border-color: #0A0A0A;
+  background: #f7f5f2;
+}
+
+.slot-btn.selected {
+  background: #0A0A0A;
+  border-color: #0A0A0A;
+  color: #fff;
+}
+
+.slot-btn:disabled, .slot-btn.unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.confirm-summary {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 24px;
+}
+
+.confirm-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #EDEAE4;
+  font-size: 14px;
+}
+
+.confirm-summary-row:last-child {
+  border-bottom: none;
+}
+
+.confirm-summary-key {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+}
+
+.confirm-summary-value {
+  font-weight: 600;
+}
+
+/* ===== APPOINTMENT CARDS ===== */
+.appointment-item {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.appt-date-col {
+  background: #0A0A0A;
+  color: #fff;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px;
+  text-align: center;
+}
+
+.appt-day-num {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.appt-month {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 3px;
+}
+
+.appt-info {
+  flex: 1;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.appt-time-service {
+  flex: 1;
+}
+
+.appt-time {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.appt-service-name {
+  font-size: 13px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.appt-barber-info {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.appt-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0A0A0A;
+}
+
+.appt-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 20px;
+  border-left: 1px solid #EDEAE4;
+}
+
+/* ===== BARBER AGENDA ===== */
+.agenda-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.toggle-group {
+  display: flex;
+  border: 1px solid #D5D1CB;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  background: #fff;
+  color: #888;
+  transition: all 0.15s;
+}
+
+.toggle-btn:not(:last-child) {
+  border-right: 1px solid #D5D1CB;
+}
+
+.toggle-btn.active {
+  background: #0A0A0A;
+  color: #fff;
+}
+
+.toggle-btn:hover:not(.active) {
+  background: #f7f5f2;
+}
+
+/* Barber tabs */
+.barber-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #D5D1CB;
+  overflow-x: auto;
+}
+
+.barber-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  text-decoration: none;
+  color: #888;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-size: 13px;
+}
+
+.barber-tab:hover {
+  color: #0A0A0A;
+}
+
+.barber-tab.active {
+  color: #0A0A0A;
+  border-bottom-color: #E8302A;
+}
+
+.barber-tab-info {}
+
+.barber-tab-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: inherit;
+}
+
+.barber-tab-level {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+/* Calendar grid */
+.calendar-grid-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #D5D1CB;
+}
+
+.calendar-grid {
+  min-width: 700px;
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+}
+
+.cal-header {
+  background: #0A0A0A;
+  color: #fff;
+  text-align: center;
+  padding: 12px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-right: 1px solid #222;
+}
+
+.cal-header:first-child {
+  background: #0A0A0A;
+}
+
+.cal-header.today-col {
+  background: #E8302A;
+}
+
+.cal-header .cal-day-num {
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.cal-time-label {
+  font-size: 10px;
+  color: #888;
+  text-align: right;
+  padding: 0 8px;
+  height: 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 4px;
+  border-right: 1px solid #EDEAE4;
+  border-bottom: 1px solid #EDEAE4;
+  background: #faf9f7;
+  letter-spacing: 0.04em;
+}
+
+.cal-cell {
+  height: 40px;
+  border-right: 1px solid #EDEAE4;
+  border-bottom: 1px solid #EDEAE4;
+  position: relative;
+  transition: background 0.1s;
+}
+
+.cal-cell:hover {
+  background: #f7f5f2;
+}
+
+.cal-cell.today-col {
+  background: #fffbfb;
+}
+
+.cal-cell.sunday-col {
+  background: repeating-linear-gradient(
+    45deg,
+    #fafafa,
+    #fafafa 4px,
+    #f0ede8 4px,
+    #f0ede8 8px
+  );
+}
+
+.cal-appt-block {
+  position: absolute;
+  inset: 2px;
+  background: #0A0A0A;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cal-appt-block.completed {
+  background: #2D6A4F;
+}
+
+.cal-appt-block.pending {
+  background: #555;
+}
+
+.cal-appt-block.cancelled {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #aaa;
+}
+
+.cal-appt-client {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-appt-service {
+  font-size: 9px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cal-appt-block.completed .cal-appt-service {
+  color: #7fb99a;
+}
+
+/* Day view list */
+.day-slot-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #EDEAE4;
+  min-height: 56px;
+}
+
+.day-slot-time {
+  width: 80px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 8px 12px 0 0;
+  font-size: 11px;
+  color: #888;
+  border-right: 1px solid #EDEAE4;
+  background: #faf9f7;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+
+.day-slot-content {
+  flex: 1;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+}
+
+.day-appt-block {
+  background: #0A0A0A;
+  color: #fff;
+  padding: 8px 14px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.day-appt-block.completed {
+  background: #2D6A4F;
+}
+
+.day-appt-block.pending {
+  background: #555;
+}
+
+.day-appt-block.cancelled {
+  background: transparent;
+  border: 1px solid #ccc;
+  color: #888;
+}
+
+.day-appt-client {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.day-appt-service {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.day-appt-block.completed .day-appt-service {
+  color: #7fb99a;
+}
+
+.day-appt-price {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ===== CLIENTS LIST ===== */
+.client-list-item {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 16px 20px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: border-color 0.15s;
+}
+
+.client-list-item:hover {
+  border-color: #888;
+}
+
+.client-info {
+  flex: 1;
+}
+
+.client-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.client-email {
+  font-size: 12px;
+  color: #888;
+}
+
+.client-stats-row {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* ===== REVENUE PAGE ===== */
+.revenue-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.revenue-table-section {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+}
+
+.section-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #EDEAE4;
+}
+
+.section-header h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+  font-weight: 600;
+}
+
+.revenue-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #EDEAE4;
+  font-size: 13px;
+}
+
+.revenue-bar-row:last-child {
+  border-bottom: none;
+}
+
+.revenue-bar-label {
+  width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.revenue-bar-track {
+  flex: 1;
+  height: 6px;
+  background: #EDEAE4;
+}
+
+.revenue-bar-fill {
+  height: 100%;
+  background: #0A0A0A;
+}
+
+.revenue-bar-value {
+  font-weight: 700;
+  width: 80px;
+  text-align: right;
+  font-size: 12px;
+}
+
+.revenue-bar-count {
+  width: 30px;
+  text-align: right;
+  color: #888;
+  font-size: 11px;
+}
+
+/* ===== SERVICES PAGE ===== */
+.service-list-item {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.service-info {
+  flex: 1;
+}
+
+.service-name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.service-desc {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.service-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.service-meta-item {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 32px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+}
+
+.modal h3 {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #888;
+  line-height: 1;
+}
+
+/* ===== NOTIFICATIONS ===== */
+.notification-item {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 16px 20px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.notification-item.unread {
+  border-left: 3px solid #E8302A;
+}
+
+.notification-dot {
+  width: 8px;
+  height: 8px;
+  background: #E8302A;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.notification-text {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.notification-time {
+  font-size: 11px;
+  color: #888;
+  flex-shrink: 0;
+}
+
+/* ===== RESCHEDULE INLINE FORM ===== */
+.reschedule-form {
+  background: #f7f5f2;
+  border: 1px solid #D5D1CB;
+  padding: 16px;
+  margin-top: 8px;
+  display: none;
+}
+
+.reschedule-form.visible {
+  display: block;
+}
+
+/* ===== SEARCH BAR ===== */
+.search-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 11px 16px;
+  border: 1px solid #D5D1CB;
+  border-right: none;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+
+.search-input:focus {
+  border-color: #0A0A0A;
+}
+
+.search-btn {
+  padding: 10px 20px;
+  background: #0A0A0A;
+  color: #fff;
+  border: 1px solid #0A0A0A;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ===== LOYALTY DETAIL PAGE ===== */
+.loyalty-big-card {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.loyalty-big-squares {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.loyalty-big-square {
+  width: 64px;
+  height: 64px;
+  border: 2px solid #D5D1CB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loyalty-big-square.filled {
+  background: #0A0A0A;
+  border-color: #0A0A0A;
+}
+
+.loyalty-big-square.free-cut {
+  border-color: #E8302A;
+}
+
+.loyalty-big-square svg {
+  width: 28px;
+  height: 28px;
+}
+
+.loyalty-progress-text {
+  font-size: 13px;
+  color: #888;
+}
+
+.loyalty-counter-big {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  margin: 16px 0 4px;
+}
+
+.loyalty-counter-sub {
+  font-size: 14px;
+  color: #888;
+}
+
+/* ===== CLIENT DETAIL ===== */
+.client-detail-header {
+  background: #fff;
+  border: 1px solid #D5D1CB;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.client-detail-info {
+  flex: 1;
+}
+
+.client-detail-name {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.client-detail-meta {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.client-detail-stats {
+  display: flex;
+  gap: 24px;
+}
+
+/* ===== WEEK NAV ===== */
+.week-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.week-nav-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #D5D1CB;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.week-nav-btn:hover {
+  border-color: #0A0A0A;
+  color: #0A0A0A;
+}
+
+.week-range {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  min-width: 180px;
+  text-align: center;
+}
+
+/* ===== BLOCK MODAL ===== */
+.block-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .nac-body {
+    flex-direction: column;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .navbar-center {
+    display: none;
+  }
+}
