@@ -3,7 +3,7 @@
 /* ===== LOGIN PAGE ===== */
 .login-page {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: #0A0A0A;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,13 +23,13 @@
 .login-logo-square {
   width: 56px;
   height: 56px;
-  background: #ffffff;
+  background: #FFFFFF;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 28px;
   font-weight: 900;
-  color: #0a0a0a;
+  color: #0A0A0A;
   margin-bottom: 16px;
 }
 
@@ -69,13 +69,13 @@
 }
 
 .login-form .form-control {
-  background: #0a0a0a;
+  background: #0A0A0A;
   border: 1px solid #333;
   color: #fff;
 }
 
 .login-form .form-control:focus {
-  border-color: #e8302a;
+  border-color: #E8302A;
 }
 
 .login-form .form-control::placeholder {
@@ -126,16 +126,37 @@
 }
 
 .login-demo-creds {
-  color: #e8302a;
+  color: #E8302A;
   font-size: 11px;
   font-family: monospace;
+}
+
+.login-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  letter-spacing: 0.03em;
+}
+
+.login-footer-link {
+  color: #E8302A;
+  font-weight: 700;
+  margin-left: 4px;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.login-footer-link:hover {
+  color: #fff;
 }
 
 /* ===== CLIENT DASHBOARD ===== */
 
 .next-appointment-card {
-  background: #ffffff;
-  border: 1px solid #d5d1cb;
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
   margin-bottom: 24px;
   overflow: hidden;
 }
@@ -145,7 +166,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
 }
 
 .nac-body {
@@ -154,7 +175,7 @@
 }
 
 .nac-date-block {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
   padding: 20px 24px;
   display: flex;
@@ -208,7 +229,7 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  background: #edeae4;
+  background: #EDEAE4;
   color: #888;
   padding: 4px 10px;
   text-transform: uppercase;
@@ -232,13 +253,13 @@
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  border-left: 1px solid #edeae4;
+  border-left: 1px solid #EDEAE4;
 }
 
 /* ===== LOYALTY CARD ===== */
 .loyalty-card {
-  background: #ffffff;
-  border: 1px solid #d5d1cb;
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
   padding: 24px;
 }
 
@@ -251,7 +272,7 @@
 .loyalty-square {
   width: 44px;
   height: 44px;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,13 +280,13 @@
 }
 
 .loyalty-square.filled {
-  background: #0a0a0a;
-  border-color: #0a0a0a;
+  background: #0A0A0A;
+  border-color: #0A0A0A;
 }
 
 .loyalty-square.star {
   background: transparent;
-  border-color: #e8302a;
+  border-color: #E8302A;
 }
 
 .loyalty-square svg {
@@ -283,15 +304,15 @@
   color: #888;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border-top: 1px solid #edeae4;
+  border-top: 1px solid #EDEAE4;
   padding-top: 12px;
   margin-top: 4px;
 }
 
 /* ===== REGULAR BARBER CARD ===== */
 .regular-barber-card {
-  background: #ffffff;
-  border: 1px solid #d5d1cb;
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
   padding: 24px;
 }
 
@@ -321,7 +342,7 @@
 .rb-stats {
   display: flex;
   gap: 20px;
-  border-top: 1px solid #edeae4;
+  border-top: 1px solid #EDEAE4;
   padding-top: 14px;
 }
 
@@ -343,14 +364,14 @@
 
 /* ===== HISTORY TABLE ===== */
 .history-card {
-  background: #ffffff;
-  border: 1px solid #d5d1cb;
+  background: #FFFFFF;
+  border: 1px solid #D5D1CB;
   margin-top: 0;
 }
 
 .history-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
 }
 
 /* ===== BOOKING FLOW ===== */
@@ -358,7 +379,7 @@
   display: flex;
   gap: 0;
   margin-bottom: 32px;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   background: #fff;
 }
 
@@ -368,7 +389,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border-right: 1px solid #d5d1cb;
+  border-right: 1px solid #D5D1CB;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -381,13 +402,13 @@
 }
 
 .booking-step.active {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
 }
 
 .booking-step.done {
   background: #f0faf5;
-  color: #2d6a4f;
+  color: #2D6A4F;
 }
 
 .booking-step-num {
@@ -403,13 +424,13 @@
 }
 
 .booking-step.active .booking-step-num {
-  background: #e8302a;
-  border-color: #e8302a;
+  background: #E8302A;
+  border-color: #E8302A;
 }
 
 .booking-step.done .booking-step-num {
-  background: #2d6a4f;
-  border-color: #2d6a4f;
+  background: #2D6A4F;
+  border-color: #2D6A4F;
   color: #fff;
 }
 
@@ -421,7 +442,7 @@
 }
 
 .barber-select-card {
-  border: 2px solid #d5d1cb;
+  border: 2px solid #D5D1CB;
   background: #fff;
   padding: 20px;
   cursor: pointer;
@@ -434,7 +455,7 @@
 }
 
 .barber-select-card.selected {
-  border-color: #e8302a;
+  border-color: #E8302A;
   background: #fff5f5;
 }
 
@@ -450,7 +471,7 @@
 }
 
 .service-select-card {
-  border: 2px solid #d5d1cb;
+  border: 2px solid #D5D1CB;
   background: #fff;
   padding: 20px;
   cursor: pointer;
@@ -462,7 +483,7 @@
 }
 
 .service-select-card.selected {
-  border-color: #e8302a;
+  border-color: #E8302A;
   background: #fff5f5;
 }
 
@@ -474,7 +495,7 @@
   font-size: 22px;
   font-weight: 800;
   margin-top: 8px;
-  color: #e8302a;
+  color: #E8302A;
 }
 
 .service-duration {
@@ -494,7 +515,7 @@
 
 .slot-btn {
   padding: 10px 16px;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   background: #fff;
   font-size: 13px;
   font-weight: 600;
@@ -504,18 +525,17 @@
 }
 
 .slot-btn:hover {
-  border-color: #0a0a0a;
+  border-color: #0A0A0A;
   background: #f7f5f2;
 }
 
 .slot-btn.selected {
-  background: #0a0a0a;
-  border-color: #0a0a0a;
+  background: #0A0A0A;
+  border-color: #0A0A0A;
   color: #fff;
 }
 
-.slot-btn:disabled,
-.slot-btn.unavailable {
+.slot-btn:disabled, .slot-btn.unavailable {
   opacity: 0.4;
   cursor: not-allowed;
   text-decoration: line-through;
@@ -523,7 +543,7 @@
 
 .confirm-summary {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 24px;
 }
 
@@ -532,7 +552,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
   font-size: 14px;
 }
 
@@ -554,7 +574,7 @@
 /* ===== APPOINTMENT CARDS ===== */
 .appointment-item {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   margin-bottom: 12px;
   display: flex;
   align-items: stretch;
@@ -562,7 +582,7 @@
 }
 
 .appt-date-col {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
   min-width: 80px;
   display: flex;
@@ -620,7 +640,7 @@
 .appt-price {
   font-size: 18px;
   font-weight: 700;
-  color: #0a0a0a;
+  color: #0A0A0A;
 }
 
 .appt-actions {
@@ -628,7 +648,7 @@
   align-items: center;
   gap: 8px;
   padding: 16px 20px;
-  border-left: 1px solid #edeae4;
+  border-left: 1px solid #EDEAE4;
 }
 
 /* ===== BARBER AGENDA ===== */
@@ -641,7 +661,7 @@
 
 .toggle-group {
   display: flex;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   overflow: hidden;
 }
 
@@ -659,11 +679,11 @@
 }
 
 .toggle-btn:not(:last-child) {
-  border-right: 1px solid #d5d1cb;
+  border-right: 1px solid #D5D1CB;
 }
 
 .toggle-btn.active {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
 }
 
@@ -676,7 +696,7 @@
   display: flex;
   gap: 0;
   margin-bottom: 24px;
-  border-bottom: 2px solid #d5d1cb;
+  border-bottom: 2px solid #D5D1CB;
   overflow-x: auto;
 }
 
@@ -696,16 +716,15 @@
 }
 
 .barber-tab:hover {
-  color: #0a0a0a;
+  color: #0A0A0A;
 }
 
 .barber-tab.active {
-  color: #0a0a0a;
-  border-bottom-color: #e8302a;
+  color: #0A0A0A;
+  border-bottom-color: #E8302A;
 }
 
-.barber-tab-info {
-}
+.barber-tab-info {}
 
 .barber-tab-name {
   font-weight: 700;
@@ -724,7 +743,7 @@
 .calendar-grid-wrapper {
   overflow-x: auto;
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
 }
 
 .calendar-grid {
@@ -734,7 +753,7 @@
 }
 
 .cal-header {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
   text-align: center;
   padding: 12px 8px;
@@ -746,11 +765,11 @@
 }
 
 .cal-header:first-child {
-  background: #0a0a0a;
+  background: #0A0A0A;
 }
 
 .cal-header.today-col {
-  background: #e8302a;
+  background: #E8302A;
 }
 
 .cal-header .cal-day-num {
@@ -770,16 +789,16 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding-top: 4px;
-  border-right: 1px solid #edeae4;
-  border-bottom: 1px solid #edeae4;
+  border-right: 1px solid #EDEAE4;
+  border-bottom: 1px solid #EDEAE4;
   background: #faf9f7;
   letter-spacing: 0.04em;
 }
 
 .cal-cell {
   height: 40px;
-  border-right: 1px solid #edeae4;
-  border-bottom: 1px solid #edeae4;
+  border-right: 1px solid #EDEAE4;
+  border-bottom: 1px solid #EDEAE4;
   position: relative;
   transition: background 0.1s;
 }
@@ -805,7 +824,7 @@
 .cal-appt-block {
   position: absolute;
   inset: 2px;
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
   font-size: 10px;
   padding: 3px 6px;
@@ -818,7 +837,7 @@
 }
 
 .cal-appt-block.completed {
-  background: #2d6a4f;
+  background: #2D6A4F;
 }
 
 .cal-appt-block.pending {
@@ -854,7 +873,7 @@
 .day-slot-row {
   display: flex;
   align-items: stretch;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
   min-height: 56px;
 }
 
@@ -866,7 +885,7 @@
   padding: 8px 12px 0 0;
   font-size: 11px;
   color: #888;
-  border-right: 1px solid #edeae4;
+  border-right: 1px solid #EDEAE4;
   background: #faf9f7;
   flex-shrink: 0;
   letter-spacing: 0.04em;
@@ -880,7 +899,7 @@
 }
 
 .day-appt-block {
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
   padding: 8px 14px;
   flex: 1;
@@ -891,7 +910,7 @@
 }
 
 .day-appt-block.completed {
-  background: #2d6a4f;
+  background: #2D6A4F;
 }
 
 .day-appt-block.pending {
@@ -926,7 +945,7 @@
 /* ===== CLIENTS LIST ===== */
 .client-list-item {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 16px 20px;
   margin-bottom: 8px;
   display: flex;
@@ -970,12 +989,12 @@
 
 .revenue-table-section {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
 }
 
 .section-header {
   padding: 16px 20px;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
 }
 
 .section-header h3 {
@@ -991,7 +1010,7 @@
   align-items: center;
   gap: 12px;
   padding: 10px 20px;
-  border-bottom: 1px solid #edeae4;
+  border-bottom: 1px solid #EDEAE4;
   font-size: 13px;
 }
 
@@ -1009,12 +1028,12 @@
 .revenue-bar-track {
   flex: 1;
   height: 6px;
-  background: #edeae4;
+  background: #EDEAE4;
 }
 
 .revenue-bar-fill {
   height: 100%;
-  background: #0a0a0a;
+  background: #0A0A0A;
 }
 
 .revenue-bar-value {
@@ -1034,7 +1053,7 @@
 /* ===== SERVICES PAGE ===== */
 .service-list-item {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -1073,7 +1092,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -1083,7 +1102,7 @@
 
 .modal {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 32px;
   width: 100%;
   max-width: 480px;
@@ -1113,7 +1132,7 @@
 /* ===== NOTIFICATIONS ===== */
 .notification-item {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 16px 20px;
   margin-bottom: 8px;
   display: flex;
@@ -1122,13 +1141,13 @@
 }
 
 .notification-item.unread {
-  border-left: 3px solid #e8302a;
+  border-left: 3px solid #E8302A;
 }
 
 .notification-dot {
   width: 8px;
   height: 8px;
-  background: #e8302a;
+  background: #E8302A;
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 6px;
@@ -1149,7 +1168,7 @@
 /* ===== RESCHEDULE INLINE FORM ===== */
 .reschedule-form {
   background: #f7f5f2;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 16px;
   margin-top: 8px;
   display: none;
@@ -1169,7 +1188,7 @@
 .search-input {
   flex: 1;
   padding: 11px 16px;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   border-right: none;
   font-size: 14px;
   outline: none;
@@ -1177,14 +1196,14 @@
 }
 
 .search-input:focus {
-  border-color: #0a0a0a;
+  border-color: #0A0A0A;
 }
 
 .search-btn {
   padding: 10px 20px;
-  background: #0a0a0a;
+  background: #0A0A0A;
   color: #fff;
-  border: 1px solid #0a0a0a;
+  border: 1px solid #0A0A0A;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -1195,7 +1214,7 @@
 /* ===== LOYALTY DETAIL PAGE ===== */
 .loyalty-big-card {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 32px;
   text-align: center;
   margin-bottom: 24px;
@@ -1212,19 +1231,19 @@
 .loyalty-big-square {
   width: 64px;
   height: 64px;
-  border: 2px solid #d5d1cb;
+  border: 2px solid #D5D1CB;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .loyalty-big-square.filled {
-  background: #0a0a0a;
-  border-color: #0a0a0a;
+  background: #0A0A0A;
+  border-color: #0A0A0A;
 }
 
 .loyalty-big-square.free-cut {
-  border-color: #e8302a;
+  border-color: #E8302A;
 }
 
 .loyalty-big-square svg {
@@ -1252,7 +1271,7 @@
 /* ===== CLIENT DETAIL ===== */
 .client-detail-header {
   background: #fff;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   padding: 24px;
   margin-bottom: 24px;
   display: flex;
@@ -1293,7 +1312,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #d5d1cb;
+  border: 1px solid #D5D1CB;
   background: #fff;
   cursor: pointer;
   font-size: 14px;
@@ -1303,8 +1322,8 @@
 }
 
 .week-nav-btn:hover {
-  border-color: #0a0a0a;
-  color: #0a0a0a;
+  border-color: #0A0A0A;
+  color: #0A0A0A;
 }
 
 .week-range {
@@ -1324,208 +1343,94 @@
 
 /* ===== RESPONSIVE — TABLET (≤ 900px) ===== */
 @media (max-width: 900px) {
+
   /* Appointment card stack */
-  .appt-card-body {
-    flex-direction: column;
-  }
-  .appt-date-block {
-    width: 100%;
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    min-width: unset;
-  }
-  .appt-date-number {
-    font-size: 32px;
-  }
-  .appt-actions {
-    flex-direction: row;
-    border-left: none;
-    border-top: 1px solid #d5d1cb;
-    padding: 14px 20px;
-  }
+  .appt-card-body { flex-direction: column; }
+  .appt-date-block { width: 100%; flex-direction: row; align-items: center; gap: 16px; padding: 16px 20px; min-width: unset; }
+  .appt-date-number { font-size: 32px; }
+  .appt-actions { flex-direction: row; border-left: none; border-top: 1px solid #D5D1CB; padding: 14px 20px; }
 
   /* Booking steps */
-  .barbers-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .barbers-grid { grid-template-columns: repeat(2, 1fr); }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
 
   /* Loyalty squares */
-  .loyalty-squares {
-    gap: 8px;
-  }
-  .loyalty-square {
-    width: 52px;
-    height: 52px;
-  }
+  .loyalty-squares { gap: 8px; }
+  .loyalty-square { width: 52px; height: 52px; }
 
   /* Agenda barber tabs */
-  .barber-tabs {
-    overflow-x: auto;
-    padding-bottom: 4px;
-    flex-wrap: nowrap;
-  }
-  .barber-tab {
-    flex-shrink: 0;
-  }
+  .barber-tabs { overflow-x: auto; padding-bottom: 4px; flex-wrap: nowrap; }
+  .barber-tab { flex-shrink: 0; }
 
   /* Week calendar scroll */
-  .week-calendar {
-    overflow-x: auto;
-  }
-  .calendar-grid {
-    min-width: 700px;
-  }
+  .week-calendar { overflow-x: auto; }
+  .calendar-grid { min-width: 700px; }
 
   /* Client detail */
-  .client-stats-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .client-stats-row { grid-template-columns: repeat(2, 1fr); }
 
   /* Revenue charts */
-  .revenue-charts {
-    grid-template-columns: 1fr;
-  }
+  .revenue-charts { grid-template-columns: 1fr; }
 
   /* Block form */
-  .block-form {
-    grid-template-columns: 1fr;
-  }
+  .block-form { grid-template-columns: 1fr; }
 }
 
 /* ===== RESPONSIVE — MOBILE (≤ 600px) ===== */
 @media (max-width: 600px) {
+
   /* Login */
-  .login-page {
-    padding: 20px;
-  }
-  .login-form {
-    padding: 24px 20px;
-  }
+  .login-page { padding: 20px; }
+  .login-form { padding: 24px 20px; }
 
   /* Appointment card */
-  .appt-date-block {
-    padding: 12px 16px;
-  }
-  .appt-date-number {
-    font-size: 26px;
-  }
-  .appt-time {
-    font-size: 28px;
-  }
-  .appt-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .appt-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
+  .appt-date-block { padding: 12px 16px; }
+  .appt-date-number { font-size: 26px; }
+  .appt-time { font-size: 28px; }
+  .appt-actions { flex-direction: column; gap: 8px; }
+  .appt-actions .btn { width: 100%; justify-content: center; }
 
   /* Booking */
-  .barbers-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  .booking-confirm-details {
-    padding: 16px;
-  }
+  .barbers-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .booking-confirm-details { padding: 16px; }
 
   /* Loyalty */
-  .loyalty-squares {
-    gap: 6px;
-  }
-  .loyalty-square {
-    width: 44px;
-    height: 44px;
-  }
-  .loyalty-square svg {
-    width: 18px;
-    height: 18px;
-  }
-  .loyalty-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .loyalty-stats {
-    grid-template-columns: 1fr 1fr;
-  }
+  .loyalty-squares { gap: 6px; }
+  .loyalty-square { width: 44px; height: 44px; }
+  .loyalty-square svg { width: 18px; height: 18px; }
+  .loyalty-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .loyalty-stats { grid-template-columns: 1fr 1fr; }
 
   /* Barber tabs */
-  .barber-tab {
-    padding: 10px 12px;
-  }
-  .barber-tab-name {
-    font-size: 12px;
-  }
-  .barber-tab-sub {
-    display: none;
-  }
+  .barber-tab { padding: 10px 12px; }
+  .barber-tab-name { font-size: 12px; }
+  .barber-tab-sub { display: none; }
 
   /* Agenda header */
-  .agenda-nav {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  .agenda-view-toggle {
-    align-self: flex-end;
-  }
+  .agenda-nav { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .agenda-view-toggle { align-self: flex-end; }
 
   /* Day view */
-  .day-time-col {
-    width: 50px;
-    font-size: 11px;
-  }
-  .day-appt-block {
-    padding: 8px 12px;
-  }
+  .day-time-col { width: 50px; font-size: 11px; }
+  .day-appt-block { padding: 8px 12px; }
 
   /* Client list */
-  .client-list-item {
-    flex-wrap: wrap;
-  }
-  .client-stats {
-    display: none;
-  }
+  .client-list-item { flex-wrap: wrap; }
+  .client-stats { display: none; }
 
   /* Table — hide less important columns on mobile */
-  .table .hide-mobile {
-    display: none;
-  }
+  .table .hide-mobile { display: none; }
 
   /* Notifications */
-  .notif-item {
-    flex-direction: column;
-    gap: 6px;
-  }
-  .notif-time {
-    align-self: flex-start;
-  }
+  .notif-item { flex-direction: column; gap: 6px; }
+  .notif-time { align-self: flex-start; }
 
   /* Revenue */
-  .revenue-stat-card {
-    padding: 14px 16px;
-  }
-  .revenue-stat-value {
-    font-size: 24px;
-  }
+  .revenue-stat-card { padding: 14px 16px; }
+  .revenue-stat-value { font-size: 24px; }
 
   /* Services */
-  .service-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .service-actions {
-    align-self: flex-end;
-  }
+  .service-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .service-actions { align-self: flex-end; }
 }
