@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% block title %}Agenda — Stage & Shears{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">HOY · {{ format_date_es(today) }}</div>
+    <div class="page-title">Agenda</div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+    <!-- View toggle -->
+    <div class="toggle-group">
+      <a href="{{ url_for('barber_agenda_view', view='day', barber_id=barber_id, date=ref_date.isoformat()) }}"
+         class="toggle-btn {% if view == 'day' %}active{% endif %}">Día</a>
+      <a href="{{ url_for('barber_agenda_view', view='week', barber_id=barber_id, date=ref_date.isoformat()) }}"
+         class="toggle-btn {% if view == 'week' %}active{% endif %}">Semana</a>
+    </div>
+    <!-- Navigation -->
+    {% if view == 'week' and week_dates is defined %}
+    <div class="week-nav">
+      <a href="{{ url_for('barber_agenda_view', view='week', barber_id=barber_id, date=prev_week_date) }}"
+         class="week-nav-btn">‹</a>
+      <span class="week-range">
+        {{ week_dates[0].day }} {{ MONTHS_ES_UPPER[week_dates[0].month-1] }}
+        —
+        {{ week_dates[6].day }} {{ MONTHS_ES_UPPER[week_dates[6].month-1] }}
+      </span>
+      <a href="{{ url_for('barber_agenda_view', view='week', barber_id=barber_id, date=next_week_date) }}"
+         class="week-nav-btn">›</a>
+    </div>
+    {% else %}
+    <div class="week-nav">
+      <a href="{{ url_for('barber_agenda_view', view='day', barber_id=barber_id, date=prev_day_date) }}"
+         class="week-nav-btn">‹</a>
+      <span class="week-range">{{ format_date_es(ref_date) }}</span>
+      <a href="{{ url_for('barber_agenda_view', view='day', barber_id=barber_id, date=next_day_date) }}"
+         class="week-nav-btn">›</a>
+    </div>
+    {% endif %}
+    <button class="btn btn-outline" onclick="openBlockModal()">+ Bloquear</button>
+  </div>
+</div>
+
+<!-- Stats Row -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Turnos Hoy</div>
+    <div class="stat-value">{{ total }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Completados</div>
+    <div class="stat-value">
+      {{ completed }}
+      <span style="font-size:16px;font-weight:400;color:#888;">de {{ total }}</span>
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Ingresos del Día</div>
+    <div class="stat-value">{{ format_price(revenue) }}</div>
+    {% if completed > 0 %}
+    <div class="stat-positive">▲ {{ completed }} completado{{ 's' if completed != 1 }}</div>
+    {% endif %}
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Próximo Turno</div>
+    {% if next_appt %}
+    <div class="stat-value">{{ next_appt.time_slot }}</div>
+    {% if minutes_until is defined and minutes_until is not none and minutes_until > 0 %}
+    <div class="stat-sub">en {{ minutes_until }} min</div>
+    {% endif %}
+    {% else %}
+    <div class="stat-value" style="font-size:18px;color:#888;">—</div>
+    <div class="stat-sub">Sin turnos pendientes</div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Barber Tabs -->
+<div class="barber-tabs">
+  {% for barber in all_barbers %}
+  <a href="{{ url_for('barber_agenda_view', view=view, barber_id=barber.id, date=ref_date.isoformat()) }}"
+     class="barber-tab {% if barber_id == barber.id %}active{% endif %}">
+    <div class="avatar avatar-sm" style="background:{{ barber.avatar_color }};">
+      {{ barber.avatar_initials }}
+    </div>
+    <div class="barber-tab-info">
+      <div class="barber-tab-name">{{ barber.name }}</div>
+      <div class="barber-tab-level">{{ barber.level }} · {{ barber.years }} años</div>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+
+<!-- WEEK VIEW -->
+{% if view == 'week' and week_dates is defined %}
+<div class="calendar-grid-wrapper">
+  <div class="calendar-grid">
+    <!-- Header row: empty corner + day headers -->
+    <div class="cal-header" style="background:#111;border-right:1px solid #222;"></div>
+    {% for d in week_dates %}
+    <div class="cal-header {% if d == today %}today-col{% endif %}" style="{% if d.weekday() == 6 %}background:#1a1a1a;{% endif %}">
+      <div style="font-size:9px;letter-spacing:0.1em;">{{ DAYS_ES_SHORT[d.weekday()] | upper }}</div>
+      <div class="cal-day-num">{{ d.day }}</div>
+      <div style="font-size:9px;color:#888;margin-top:2px;">{{ MONTHS_ES_UPPER[d.month-1] }}</div>
+      {% if d.weekday() == 6 %}
+      <div style="font-size:8px;color:#555;margin-top:2px;letter-spacing:0.05em;">CERRADO</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Time slots -->
+    {% for slot in time_slots %}
+    <!-- Time label -->
+    <div class="cal-time-label">{{ slot }}</div>
+    <!-- Day cells -->
+    {% for d in week_dates %}
+    <div class="cal-cell
+      {% if d == today %}today-col{% endif %}
+      {% if d.weekday() == 6 %}sunday-col{% endif %}">
+      {% if d.weekday() != 6 %}
+        {% set day_slots = appt_grid.get(d, {}) %}
+        {% set appt = day_slots.get(slot) %}
+        {% if appt %}
+          <div class="cal-appt-block {{ appt.status }}" title="{{ appt.client.name }} — {{ appt.service.name }}">
+            <div class="cal-appt-client">{{ appt.client.name.split()[0] }}</div>
+            <div class="cal-appt-service">{{ appt.service.name }}</div>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Legend -->
+<div style="display:flex;gap:16px;margin-top:16px;font-size:12px;color:#888;align-items:center;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:#0A0A0A;flex-shrink:0;"></div> Confirmado</div>
+  <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:#2D6A4F;flex-shrink:0;"></div> Completado</div>
+  <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;background:#555;flex-shrink:0;"></div> Pendiente</div>
+  <div style="display:flex;align-items:center;gap:6px;"><div style="width:14px;height:14px;border:1px solid #ccc;flex-shrink:0;"></div> Cancelado</div>
+</div>
+
+<!-- DAY VIEW -->
+{% else %}
+<div class="card" style="padding:0;overflow:hidden;">
+  {% if appointments %}
+    {% for slot in time_slots %}
+    <div class="day-slot-row">
+      <div class="day-slot-time">{{ slot }}</div>
+      <div class="day-slot-content">
+        {% set appt = appt_by_slot.get(slot) %}
+        {% if appt %}
+          <div class="day-appt-block {{ appt.status }}">
+            <div>
+              <div class="day-appt-client">{{ appt.client.name }}</div>
+              <div class="day-appt-service">{{ appt.service.name }} · {{ appt.service.duration_minutes }} min</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <div class="day-appt-price">{{ appt.service.price_formatted() }}</div>
+              <span class="badge {% if appt.status == 'confirmed' %}badge-red{% elif appt.status == 'completed' %}badge-green{% elif appt.status == 'pending' %}badge-gray{% else %}badge-outline{% endif %}" style="font-size:9px;">
+                {% if appt.status == 'confirmed' %}Confirmado
+                {% elif appt.status == 'completed' %}Completado
+                {% elif appt.status == 'pending' %}Pendiente
+                {% else %}Cancelado{% endif %}
+              </span>
+              {% if appt.status in ('confirmed', 'pending') %}
+              <form method="POST" action="{{ url_for('barber_complete_appointment', appt_id=appt.id) }}" id="complete-form-{{ appt.id }}" style="display:inline;">
+                <button type="button"
+                  class="btn btn-sm"
+                  style="background:#2D6A4F;color:#fff;border-color:#2D6A4F;"
+                  onclick="confirmComplete({{ appt.id }})">
+                  ✓ Completar
+                </button>
+              </form>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    {% for slot in time_slots %}
+    <div class="day-slot-row">
+      <div class="day-slot-time">{{ slot }}</div>
+      <div class="day-slot-content"></div>
+    </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- Block Modal -->
+<div class="modal-overlay" id="block-modal" style="display:none;">
+  <div class="modal">
+    <button class="modal-close" onclick="closeBlockModal()">×</button>
+    <h3>Bloquear Horario</h3>
+    <form method="POST" action="{{ url_for('barber_block') }}">
+      <div class="block-form">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input type="date" name="date" class="form-control" value="{{ ref_date.isoformat() }}" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Barbero</label>
+          <select name="barber_id" class="form-control">
+            {% for barber in all_barbers %}
+            <option value="{{ barber.id }}" {% if barber_id == barber.id %}selected{% endif %}>{{ barber.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora inicio</label>
+          <input type="time" name="start_time" class="form-control" value="09:00" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hora fin</label>
+          <input type="time" name="end_time" class="form-control" value="10:00" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Motivo (opcional)</label>
+        <input type="text" name="reason" class="form-control" placeholder="Descanso, reunión, etc.">
+      </div>
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button type="button" class="btn btn-outline" onclick="closeBlockModal()">Cancelar</button>
+        <button type="submit" class="btn btn-dark">Bloquear</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
