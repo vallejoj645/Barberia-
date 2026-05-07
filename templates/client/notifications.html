@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Notificaciones — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Cuenta</div>
+    <div class="page-title">Notificaciones</div>
+  </div>
+  {% if notifications %}
+  <span class="badge badge-dark" style="padding:6px 14px;font-size:12px;">{{ notifications | length }} total</span>
+  {% endif %}
+</div>
+
+{% if notifications %}
+  {% for notif in notifications %}
+  <div class="notification-item {% if not notif.read %}unread{% endif %}">
+    {% if not notif.read %}
+    <div class="notification-dot"></div>
+    {% else %}
+    <div style="width:8px;height:8px;border-radius:50%;background:#D5D1CB;flex-shrink:0;margin-top:6px;"></div>
+    {% endif %}
+    <div class="notification-text">{{ notif.message }}</div>
+    <div class="notification-time">
+      {% set delta = (now - notif.created_at) %}
+      {% if delta.days > 0 %}
+        hace {{ delta.days }} día{{ 's' if delta.days != 1 }}
+      {% elif (delta.seconds // 3600) > 0 %}
+        hace {{ delta.seconds // 3600 }} hora{{ 's' if (delta.seconds // 3600) != 1 }}
+      {% elif (delta.seconds // 60) > 0 %}
+        hace {{ delta.seconds // 60 }} min
+      {% else %}
+        ahora
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <div class="empty-state">
+      <p style="font-size:32px;margin-bottom:8px;">◉</p>
+      <p>No tenés notificaciones.</p>
+    </div>
+  </div>
+{% endif %}
+{% endblock %}

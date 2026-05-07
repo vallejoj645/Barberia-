@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% block title %}Reservar Turno — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Gestión</div>
+    <div class="page-title">Reservar Turno</div>
+  </div>
+</div>
+
+<!-- Step Indicator -->
+<div class="booking-steps" style="margin-bottom:32px;">
+  <div class="booking-step {% if step == '1' %}active{% elif step in ('2','3') %}done{% endif %}">
+    <div class="booking-step-num">{% if step in ('2','3') %}✓{% else %}1{% endif %}</div>
+    <span>Barbero y Servicio</span>
+  </div>
+  <div class="booking-step {% if step == '2' %}active{% elif step == '3' %}done{% endif %}">
+    <div class="booking-step-num">{% if step == '3' %}✓{% else %}2{% endif %}</div>
+    <span>Fecha y Horario</span>
+  </div>
+  <div class="booking-step {% if step == '3' %}active{% endif %}">
+    <div class="booking-step-num">3</div>
+    <span>Confirmar</span>
+  </div>
+</div>
+
+<!-- STEP 1: Barber + Service -->
+{% if step == '1' %}
+<form method="GET" action="{{ url_for('client_book') }}" id="step1-form">
+  <input type="hidden" name="step" value="2">
+
+  <div style="margin-bottom:32px;">
+    <div class="card-label">Elegí tu barbero</div>
+    <div class="barber-selection-grid">
+      {% for barber in barbers %}
+      <label class="barber-select-card" for="barber-{{ barber.id }}">
+        <input type="radio" name="barber_id" id="barber-{{ barber.id }}" value="{{ barber.id }}">
+        <div class="avatar avatar-lg" style="background:{{ barber.avatar_color }};margin:0 auto 12px;">
+          {{ barber.avatar_initials }}
+        </div>
+        <div style="font-weight:800;font-size:15px;">{{ barber.name }}</div>
+        <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px;">
+          {{ barber.level }} · {{ barber.years }} años
+        </div>
+        <div style="font-size:11px;color:#888;margin-top:4px;">{{ barber.specialties }}</div>
+        <div class="stars" style="margin-top:8px;font-size:11px;">
+          {% for i in range(barber.rating | int) %}★{% endfor %}
+        </div>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div style="margin-bottom:32px;">
+    <div class="card-label">Elegí el servicio</div>
+    <div class="service-selection-grid">
+      {% for service in services %}
+      <label class="service-select-card" for="service-{{ service.id }}">
+        <input type="radio" name="service_id" id="service-{{ service.id }}" value="{{ service.id }}">
+        <div style="font-weight:700;font-size:15px;">{{ service.name }}</div>
+        {% if service.description %}
+        <div style="font-size:12px;color:#888;margin-top:4px;">{{ service.description }}</div>
+        {% endif %}
+        <div class="service-price">{{ service.price_formatted() }}</div>
+        <div class="service-duration">{{ service.duration_minutes }} min</div>
+      </label>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;">
+    <a href="{{ url_for('client_dashboard') }}" class="btn btn-outline">Cancelar</a>
+    <button type="submit" class="btn btn-primary" id="step1-continue" disabled>
+      Continuar →
+    </button>
+  </div>
+</form>
+
+<!-- STEP 2: Date + Time -->
+{% elif step == '2' %}
+{% set sel_barber_id = request.args.get('barber_id') %}
+{% set sel_service_id = request.args.get('service_id') %}
+{% set sel_barber = barbers | selectattr('id', 'equalto', sel_barber_id | int) | first %}
+{% set sel_service = services | selectattr('id', 'equalto', sel_service_id | int) | first %}
+
+<div class="card" style="margin-bottom:24px;">
+  <div class="card-label">Selección actual</div>
+  <div class="flex items-center gap-16">
+    {% if sel_barber %}
+    <div class="flex items-center gap-12">
+      <div class="avatar" style="background:{{ sel_barber.avatar_color }};">
+        {{ sel_barber.avatar_initials }}
+      </div>
+      <div>
+        <div style="font-weight:700;">{{ sel_barber.name }}</div>
+        <div style="font-size:12px;color:#888;">{{ sel_barber.level }}</div>
+      </div>
+    </div>
+    {% endif %}
+    <span style="color:#D5D1CB;">|</span>
+    {% if sel_service %}
+    <div>
+      <div style="font-weight:700;">{{ sel_service.name }}</div>
+      <div style="font-size:12px;color:#888;">{{ sel_service.duration_minutes }} min · {{ sel_service.price_formatted() }}</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="card">
+  <input type="hidden" id="step2-barber-id" value="{{ sel_barber_id }}">
+  <input type="hidden" id="step2-service-id" value="{{ sel_service_id }}">
+
+  <div class="form-group">
+    <label class="form-label">Fecha</label>
+    <input
+      type="date"
+      id="date-picker"
+      class="form-control"
+      min="{{ today.isoformat() }}"
+      style="max-width:220px;"
+    >
+  </div>
+
+  <div id="slots-container" style="display:none;">
+    <div class="card-label" style="margin-top:16px;">Horarios disponibles</div>
+    <div class="slots-grid" id="slots-grid"></div>
+  </div>
+
+  <input type="hidden" id="selected-slot-input" name="time_slot" value="">
+
+  <div style="margin-top:24px;display:flex;gap:12px;">
+    <a href="{{ url_for('client_book', step='1') }}" class="btn btn-outline">← Atrás</a>
+    <button
+      type="button"
+      id="step2-continue"
+      class="btn btn-primary"
+      disabled
+      onclick="goToStep3()"
+    >Continuar →</button>
+  </div>
+</div>
+
+<script>
+function goToStep3() {
+  var barberId = document.getElementById('step2-barber-id').value;
+  var serviceId = document.getElementById('step2-service-id').value;
+  var date = document.getElementById('date-picker').value;
+  var slot = document.getElementById('selected-slot-input').value;
+  if (!barberId || !serviceId || !date || !slot) return;
+  window.location.href = '/client/book?step=3&barber_id=' + barberId +
+    '&service_id=' + serviceId + '&date=' + date + '&time_slot=' + slot;
+}
+</script>
+
+<!-- STEP 3: Confirm -->
+{% elif step == '3' %}
+{% set sel_barber_id = request.args.get('barber_id') | int %}
+{% set sel_service_id = request.args.get('service_id') | int %}
+{% set sel_date = request.args.get('date') %}
+{% set sel_time = request.args.get('time_slot') %}
+{% set sel_barber = barbers | selectattr('id', 'equalto', sel_barber_id) | first %}
+{% set sel_service = services | selectattr('id', 'equalto', sel_service_id) | first %}
+
+<div class="confirm-summary">
+  <div class="card-label">Resumen del turno</div>
+
+  {% if sel_barber %}
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Barbero</span>
+    <div class="flex items-center gap-12">
+      <div class="avatar avatar-sm" style="background:{{ sel_barber.avatar_color }};">{{ sel_barber.avatar_initials }}</div>
+      <span class="confirm-summary-value">{{ sel_barber.name }}</span>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if sel_service %}
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Servicio</span>
+    <span class="confirm-summary-value">{{ sel_service.name }}</span>
+  </div>
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Duración</span>
+    <span class="confirm-summary-value">{{ sel_service.duration_minutes }} minutos</span>
+  </div>
+  {% endif %}
+
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Fecha</span>
+    <span class="confirm-summary-value">{{ sel_date }}</span>
+  </div>
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Horario</span>
+    <span class="confirm-summary-value" style="font-size:20px;font-weight:800;">{{ sel_time }}</span>
+  </div>
+  {% if sel_service %}
+  <div class="confirm-summary-row">
+    <span class="confirm-summary-key">Precio</span>
+    <span class="confirm-summary-value" style="color:#E8302A;font-size:20px;font-weight:800;">{{ sel_service.price_formatted() }}</span>
+  </div>
+  {% endif %}
+</div>
+
+<form method="POST" action="{{ url_for('client_book') }}" style="margin-top:24px;">
+  <input type="hidden" name="barber_id" value="{{ sel_barber_id }}">
+  <input type="hidden" name="service_id" value="{{ sel_service_id }}">
+  <input type="hidden" name="date" value="{{ sel_date }}">
+  <input type="hidden" name="time_slot" value="{{ sel_time }}">
+
+  <div class="form-group">
+    <label class="form-label">Notas (opcional)</label>
+    <textarea name="notes" class="form-control" placeholder="¿Alguna indicación especial para tu barbero?"></textarea>
+  </div>
+
+  <div style="display:flex;gap:12px;">
+    <a href="{{ url_for('client_book', step='2', barber_id=sel_barber_id, service_id=sel_service_id) }}" class="btn btn-outline">← Atrás</a>
+    <button type="submit" class="btn btn-primary btn-lg">✓ Confirmar Turno</button>
+  </div>
+</form>
+{% endif %}
+{% endblock %}

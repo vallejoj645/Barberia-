@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Programa Fidelidad — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Beneficios</div>
+    <div class="page-title">Programa Fidelidad</div>
+  </div>
+</div>
+
+{% if loyalty %}
+{% set current_in_cycle = loyalty.total_cuts % 6 %}
+{% set cycles_completed = loyalty.total_cuts // 6 %}
+
+<div class="loyalty-big-card">
+  <div class="card-label">Tu tarjeta de fidelidad</div>
+
+  <div class="loyalty-counter-big">{{ loyalty.total_cuts }}</div>
+  <div class="loyalty-counter-sub">cortes en total</div>
+
+  <div class="loyalty-big-squares">
+    {% for i in range(6) %}
+      {% if i < current_in_cycle %}
+      <div class="loyalty-big-square filled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="6" cy="6" r="3"/>
+          <circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+      </div>
+      {% elif i == 5 %}
+      <div class="loyalty-big-square free-cut">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#E8302A" stroke-width="1.5">
+          <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+        </svg>
+      </div>
+      {% else %}
+      <div class="loyalty-big-square">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#D5D1CB" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="6" cy="6" r="3"/>
+          <circle cx="6" cy="18" r="3"/>
+          <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+          <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+          <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+        </svg>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="loyalty-progress-text">
+    {% if current_in_cycle == 0 and loyalty.total_cuts > 0 %}
+      <span style="color:#2D6A4F;font-weight:700;font-size:16px;">¡Completaste el ciclo! Tenés un corte gratis disponible.</span>
+    {% else %}
+      Te faltan <strong>{{ 6 - current_in_cycle }}</strong> corte{{ 's' if (6 - current_in_cycle) != 1 }} para ganar uno gratis
+    {% endif %}
+  </div>
+</div>
+
+<!-- Stats row -->
+<div class="stats-grid" style="margin-bottom:32px;">
+  <div class="stat-card">
+    <div class="stat-label">Cortes Totales</div>
+    <div class="stat-value">{{ loyalty.total_cuts }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Ciclos Completados</div>
+    <div class="stat-value">{{ cycles_completed }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Cortes Gratis Canjeados</div>
+    <div class="stat-value">{{ loyalty.free_cuts_redeemed }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">En el Ciclo Actual</div>
+    <div class="stat-value">{{ current_in_cycle }}/6</div>
+  </div>
+</div>
+{% else %}
+<div class="card" style="text-align:center;padding:48px;">
+  <div style="font-size:48px;margin-bottom:16px;">✂</div>
+  <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Empezá a acumular cortes</div>
+  <div style="color:#888;margin-bottom:24px;">Por cada 6 cortes, el 7mo es gratis. Reservá tu primer turno para empezar.</div>
+  <a href="{{ url_for('client_book') }}" class="btn btn-primary">Reservar Turno</a>
+</div>
+{% endif %}
+
+<!-- History of completed cuts -->
+{% if completed_appts %}
+<div class="card-label">Cortes Registrados</div>
+<div class="card" style="padding:0;overflow:hidden;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Fecha</th>
+        <th>Servicio</th>
+        <th>Barbero</th>
+        <th>Precio</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appt in completed_appts %}
+      <tr>
+        <td style="color:#888;font-size:12px;">{{ loop.index }}</td>
+        <td>
+          <span style="font-weight:600;">{{ appt.date.day }}</span>
+          <span style="color:#888;font-size:12px;"> {{ MONTHS_ES_UPPER[appt.date.month-1] }} {{ appt.date.year }}</span>
+        </td>
+        <td>{{ appt.service.name }}</td>
+        <td>{{ appt.barber.name }}</td>
+        <td style="font-weight:700;">{{ appt.service.price_formatted() }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

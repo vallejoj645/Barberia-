@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Stage & Shears{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Hola de nuevo,</div>
+    <div class="page-title">{{ current_user.name.split()[0] }}.</div>
+  </div>
+  <a href="{{ url_for('client_book') }}" class="btn btn-primary btn-lg">
+    + Nuevo Turno
+  </a>
+</div>
+
+<!-- Next Appointment -->
+{% if next_appt %}
+<div class="next-appointment-card">
+  <div class="nac-header">
+    <span class="card-label" style="margin:0;">Tu Próximo Turno</span>
+    <span class="badge badge-red">Confirmado</span>
+  </div>
+  <div class="nac-body">
+    <div class="nac-date-block">
+      <div class="nac-day-num">{{ next_appt.date.day }}</div>
+      <div class="nac-month">{{ MONTHS_ES_UPPER[next_appt.date.month - 1] }}</div>
+      <div class="nac-barber-initials">{{ next_appt.barber.avatar_initials }}</div>
+    </div>
+    <div class="nac-info">
+      <div class="nac-time">
+        {{ next_appt.time_slot }}
+        <span class="nac-duration-pill">{{ next_appt.service.duration_minutes }} MIN</span>
+      </div>
+      <div class="nac-service">{{ next_appt.service.name }}</div>
+      <div class="nac-barber-name">con {{ next_appt.barber.name }} · {{ next_appt.service.price_formatted() }}</div>
+    </div>
+    <div class="nac-actions">
+      <button
+        class="btn btn-outline btn-sm"
+        onclick="toggleReschedule({{ next_appt.id }})"
+      >Reagendar</button>
+      <form method="POST" action="{{ url_for('client_cancel_appointment', appt_id=next_appt.id) }}" style="display:inline;" onsubmit="return confirm('¿Cancelar este turno?')">
+        <button type="submit" class="btn btn-outline btn-sm">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  <!-- Reschedule form -->
+  <div class="reschedule-form" id="reschedule-{{ next_appt.id }}">
+    <form method="POST" action="{{ url_for('client_reschedule_appointment', appt_id=next_appt.id) }}" style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+      <div class="form-group" style="margin:0;flex:1;min-width:150px;">
+        <label class="form-label">Nueva Fecha</label>
+        <input type="date" name="new_date" class="form-control" min="{{ today.isoformat() }}" required>
+      </div>
+      <div class="form-group" style="margin:0;flex:1;min-width:120px;">
+        <label class="form-label">Nuevo Horario</label>
+        <input type="time" name="new_time" class="form-control" step="1800" required>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-dark btn-sm">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% else %}
+<div class="card" style="margin-bottom:24px;">
+  <div class="card-label">Tu Próximo Turno</div>
+  <div class="empty-state" style="padding:24px 0;">
+    <p style="font-size:32px;margin-bottom:8px;">✂</p>
+    <p>No tenés turnos próximos.</p>
+    <a href="{{ url_for('client_book') }}" class="btn btn-primary" style="margin-top:16px;">Reservar ahora</a>
+  </div>
+</div>
+{% endif %}
+
+<!-- Lower Row -->
+<div class="grid-2" style="margin-bottom:24px;">
+
+  <!-- Loyalty Card -->
+  <div class="loyalty-card">
+    <div class="card-label">Programa Fidelidad</div>
+    {% if loyalty %}
+      {% set current_in_cycle = loyalty.total_cuts % 6 %}
+      <div class="flex items-center justify-between mb-12">
+        <div style="font-size:18px;font-weight:800;">
+          {% if current_in_cycle == 0 and loyalty.total_cuts > 0 %}
+            ¡Corte gratis disponible!
+          {% else %}
+            {{ 6 - current_in_cycle }} corte{{ 's' if (6 - current_in_cycle) != 1 }} para uno gratis
+          {% endif %}
+        </div>
+        <span class="badge badge-dark">{{ current_in_cycle }}/6</span>
+      </div>
+      <div class="loyalty-squares">
+        {% for i in range(6) %}
+          {% if i < current_in_cycle %}
+          <div class="loyalty-square filled">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="6" cy="6" r="3"/>
+              <circle cx="6" cy="18" r="3"/>
+              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+              <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+            </svg>
+          </div>
+          {% elif i == 5 %}
+          <div class="loyalty-square star">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#E8302A" stroke-width="1.5">
+              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/>
+            </svg>
+          </div>
+          {% else %}
+          <div class="loyalty-square">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#D5D1CB" stroke-width="1.5" stroke-linecap="round">
+              <circle cx="6" cy="6" r="3"/>
+              <circle cx="6" cy="18" r="3"/>
+              <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+              <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+              <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+            </svg>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="loyalty-footer">
+        — {{ loyalty.free_cuts_redeemed }} corte{{ 's' if loyalty.free_cuts_redeemed != 1 }} gratis canjeado{{ 's' if loyalty.free_cuts_redeemed != 1 }} hasta hoy —
+      </div>
+    {% else %}
+      <div class="empty-state" style="padding:16px 0;">
+        <p style="color:#888;">Aún no tenés historial de cortes.</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Regular Barber -->
+  <div class="regular-barber-card">
+    <div class="card-label">Tu Barbero Habitual</div>
+    {% if regular_barber %}
+    <div class="rb-barber">
+      <div class="avatar avatar-lg" style="background:{{ regular_barber.avatar_color }};">
+        {{ regular_barber.avatar_initials }}
+      </div>
+      <div class="rb-info">
+        <div class="rb-name">{{ regular_barber.name }}</div>
+        <div class="rb-specialties">{{ regular_barber.specialties }}</div>
+        <div class="stars mt-4">
+          {% for i in range(regular_barber.rating | int) %}★{% endfor %}{% if regular_barber.rating % 1 >= 0.5 %}½{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="rb-stats">
+      <div class="rb-stat">
+        <div class="rb-stat-num">{{ visit_count }}</div>
+        <div class="rb-stat-label">Visitas</div>
+      </div>
+      <div class="rb-stat">
+        <div class="rb-stat-num">{{ regular_barber.level }}</div>
+        <div class="rb-stat-label">Nivel</div>
+      </div>
+      <div class="rb-stat">
+        <div class="rb-stat-num">{{ regular_barber.years }}</div>
+        <div class="rb-stat-label">Años</div>
+      </div>
+    </div>
+    {% else %}
+    <div class="empty-state" style="padding:16px 0;">
+      <p style="color:#888;">Reservá tu primer turno para asignar un barbero habitual.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Recent History -->
+<div class="history-card">
+  <div class="history-header">
+    <span class="card-label" style="margin:0;">Historial Reciente</span>
+  </div>
+  {% if recent_history %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Servicio</th>
+        <th>Barbero</th>
+        <th>Precio</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for appt in recent_history %}
+      <tr>
+        <td>
+          <span style="font-weight:700;">{{ appt.date.day }}</span>
+          <span style="color:#888;font-size:12px;"> {{ MONTHS_ES_UPPER[appt.date.month-1] }} {{ appt.date.year }}</span>
+        </td>
+        <td>{{ appt.service.name }}</td>
+        <td>{{ appt.barber.name }}</td>
+        <td style="font-weight:700;">{{ appt.service.price_formatted() }}</td>
+        <td><span class="badge badge-green">Completado</span></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">Sin historial todavía.</div>
+  {% endif %}
+</div>
+{% endblock %}
