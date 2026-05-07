@@ -16,6 +16,12 @@
 
   <!-- NAVBAR -->
   <nav class="navbar">
+    {% if current_user.is_authenticated %}
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    {% endif %}
+
     <div class="navbar-brand">
       <div class="navbar-logo">S</div>
       <div class="navbar-title">
@@ -27,27 +33,32 @@
     {% if current_user.is_authenticated %}
     <div class="navbar-center">
       <a href="{{ url_for('client_dashboard') }}" class="view-toggle {% if request.path.startswith('/client') %}active{% endif %}">
-        Vista Cliente
+        <span class="toggle-full">Vista Cliente</span>
+        <span class="toggle-short">Cliente</span>
       </a>
       <a href="{{ url_for('barber_agenda_view') }}" class="view-toggle {% if request.path.startswith('/barber') %}active{% endif %}">
-        Vista Barbero
+        <span class="toggle-full">Vista Barbero</span>
+        <span class="toggle-short">Barbero</span>
       </a>
     </div>
 
     <div class="navbar-right">
       <span class="status-dot"></span>
       <span class="navbar-date">{{ now_date_str }}</span>
-      <span style="color:#444">·</span>
-      <span class="navbar-user">{{ current_user.name }}</span>
+      <span class="navbar-sep" style="color:#444">·</span>
+      <span class="navbar-user">{{ current_user.name.split()[0] }}</span>
       <a href="{{ url_for('logout') }}" class="navbar-logout">Salir</a>
     </div>
     {% endif %}
   </nav>
 
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
   <div class="app-body">
     {% if current_user.is_authenticated %}
     <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       {% if request.path.startswith('/client') %}
       <!-- Client Sidebar -->
       <div class="sidebar-section">
