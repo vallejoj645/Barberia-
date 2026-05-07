@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Servicios — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Configuración</div>
+    <div class="page-title">Servicios</div>
+  </div>
+  <button class="btn btn-primary" onclick="openServiceModal('create')">+ Nuevo Servicio</button>
+</div>
+
+{% if services %}
+  {% for svc in services %}
+  <div class="service-list-item">
+    <div style="width:48px;height:48px;background:#0A0A0A;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" style="width:22px;height:22px;">
+        <circle cx="6" cy="6" r="3"/>
+        <circle cx="6" cy="18" r="3"/>
+        <line x1="20" y1="4" x2="8.12" y2="15.88"/>
+        <line x1="14.47" y1="14.48" x2="20" y2="20"/>
+        <line x1="8.12" y1="8.12" x2="12" y2="12"/>
+      </svg>
+    </div>
+    <div class="service-info">
+      <div class="service-name">{{ svc.name }}</div>
+      {% if svc.description %}
+      <div class="service-desc">{{ svc.description }}</div>
+      {% endif %}
+      <div class="service-meta">
+        <span class="service-meta-item">{{ svc.duration_minutes }} min</span>
+        <span class="service-meta-item" style="color:#E8302A;font-weight:700;">{{ svc.price_formatted() }}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button
+        class="btn btn-outline btn-sm"
+        onclick="openServiceModal('edit', {
+          id: {{ svc.id }},
+          name: '{{ svc.name | replace("'", "\\'") }}',
+          duration: {{ svc.duration_minutes }},
+          price: {{ svc.price }},
+          description: '{{ svc.description | replace("'", "\\'") }}'
+        })"
+      >Editar</button>
+      <form method="POST" action="{{ url_for('barber_services') }}" id="delete-service-form-{{ svc.id }}">
+        <input type="hidden" name="action" value="delete">
+        <input type="hidden" name="service_id" value="{{ svc.id }}">
+        <button
+          type="button"
+          class="btn btn-outline btn-sm"
+          style="color:#E8302A;border-color:#E8302A;"
+          onclick="confirmDeleteService({{ svc.id }}, '{{ svc.name | replace("'", "\\'") }}')"
+        >Eliminar</button>
+      </form>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <div class="empty-state">
+      No hay servicios configurados.
+      <button class="btn btn-primary" style="margin-top:16px;" onclick="openServiceModal('create')">+ Crear primer servicio</button>
+    </div>
+  </div>
+{% endif %}
+
+<!-- Service Modal -->
+<div class="modal-overlay" id="service-modal" style="display:none;">
+  <div class="modal">
+    <button class="modal-close" onclick="closeServiceModal()">×</button>
+    <h3 class="modal-title">Nuevo Servicio</h3>
+    <form method="POST" action="{{ url_for('barber_services') }}">
+      <input type="hidden" name="action" value="create">
+      <input type="hidden" name="service_id" value="">
+      <div class="form-group">
+        <label class="form-label">Nombre del servicio</label>
+        <input type="text" name="name" class="form-control" placeholder="Ej: Corte Clásico" required>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="form-group">
+          <label class="form-label">Duración (minutos)</label>
+          <input type="number" name="duration_minutes" class="form-control" value="30" min="10" step="10" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Precio ($)</label>
+          <input type="number" name="price" class="form-control" placeholder="8000" min="0" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descripción (opcional)</label>
+        <textarea name="description" class="form-control" placeholder="Descripción breve del servicio..."></textarea>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:8px;">
+        <button type="button" class="btn btn-outline" onclick="closeServiceModal()">Cancelar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

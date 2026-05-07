@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}Ingresos — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Finanzas</div>
+    <div class="page-title">Ingresos</div>
+  </div>
+  {% if all_barbers %}
+  <form method="GET" action="{{ url_for('barber_revenue') }}" style="display:flex;gap:8px;align-items:center;">
+    <select name="barber_id" class="form-control" style="width:auto;font-size:12px;" onchange="this.form.submit()">
+      <option value="">Todos los barberos</option>
+      {% for b in all_barbers %}
+      <option value="{{ b.id }}" {% if barber_id == b.id %}selected{% endif %}>{{ b.name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  {% endif %}
+</div>
+
+<!-- Stats Row -->
+<div class="stats-grid" style="margin-bottom:32px;">
+  <div class="stat-card">
+    <div class="stat-label">Hoy</div>
+    <div class="stat-value">{{ format_price(today_revenue) }}</div>
+    <div class="stat-sub">{{ today_count }} turno{{ 's' if today_count != 1 }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Esta Semana</div>
+    <div class="stat-value">{{ format_price(week_revenue) }}</div>
+    <div class="stat-sub">{{ week_count }} turno{{ 's' if week_count != 1 }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Este Mes</div>
+    <div class="stat-value">{{ format_price(month_revenue) }}</div>
+    <div class="stat-sub">{{ month_count }} turno{{ 's' if month_count != 1 }}</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Promedio por Turno</div>
+    <div class="stat-value">
+      {% if month_count > 0 %}{{ format_price((month_revenue // month_count)) }}{% else %}—{% endif %}
+    </div>
+    <div class="stat-sub">este mes</div>
+  </div>
+</div>
+
+<!-- Daily breakdown -->
+<div class="card-label">Desglose Semanal</div>
+<div class="card" style="padding:0;overflow:hidden;margin-bottom:32px;">
+  {% if daily_stats %}
+  {% set max_rev = daily_stats | map(attribute='revenue') | max %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Día</th>
+        <th>Turnos</th>
+        <th>Ingresos</th>
+        <th style="width:40%;">Distribución</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for day in daily_stats %}
+      <tr {% if day.date == today %}style="background:#fffbfb;"{% endif %}>
+        <td>
+          <span style="font-weight:600;">{{ DAYS_ES_SHORT[day.date.weekday()] }}</span>
+          <span style="color:#888;font-size:12px;"> {{ day.date.day }} {{ MONTHS_ES_UPPER[day.date.month-1] }}</span>
+          {% if day.date == today %}<span class="badge badge-red" style="margin-left:6px;font-size:9px;">HOY</span>{% endif %}
+        </td>
+        <td>{{ day.count }}</td>
+        <td style="font-weight:700;">{{ format_price(day.revenue) }}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="flex:1;height:8px;background:#EDEAE4;">
+              <div style="height:100%;background:#0A0A0A;width:{% if max_rev > 0 %}{{ (day.revenue / max_rev * 100) | int }}{% else %}0{% endif %}%;"></div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty-state">Sin datos para esta semana.</div>
+  {% endif %}
+</div>
+
+<!-- Two columns: services + barbers -->
+<div class="revenue-grid">
+
+  <!-- By service -->
+  <div class="revenue-table-section">
+    <div class="section-header">
+      <h3>Por Servicio — Este Mes</h3>
+    </div>
+    {% if service_stats %}
+      {% set max_svc = service_stats.values() | map(attribute='revenue') | max %}
+      {% for svc_name, stats in service_stats.items() | sort(attribute='1.revenue', reverse=True) %}
+      <div class="revenue-bar-row">
+        <div class="revenue-bar-label">{{ svc_name }}</div>
+        <div class="revenue-bar-track">
+          <div class="revenue-bar-fill" style="width:{% if max_svc > 0 %}{{ (stats.revenue / max_svc * 100) | int }}{% else %}0{% endif %}%;"></div>
+        </div>
+        <div class="revenue-bar-value">{{ format_price(stats.revenue) }}</div>
+        <div class="revenue-bar-count">{{ stats.count }}x</div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state" style="padding:24px;">Sin datos.</div>
+    {% endif %}
+  </div>
+
+  <!-- By barber -->
+  <div class="revenue-table-section">
+    <div class="section-header">
+      <h3>Por Barbero — Este Mes</h3>
+    </div>
+    {% if barber_stats %}
+      {% set max_barber = barber_stats.values() | map(attribute='revenue') | max %}
+      {% for bname, stats in barber_stats.items() | sort(attribute='1.revenue', reverse=True) %}
+      <div class="revenue-bar-row">
+        <div class="revenue-bar-label" style="display:flex;align-items:center;gap:8px;">
+          <div class="avatar avatar-sm" style="background:{{ stats.barber.avatar_color }};">{{ stats.barber.avatar_initials }}</div>
+          {{ bname.split()[0] }}
+        </div>
+        <div class="revenue-bar-track">
+          <div class="revenue-bar-fill" style="width:{% if max_barber > 0 %}{{ (stats.revenue / max_barber * 100) | int }}{% else %}0{% endif %}%;"></div>
+        </div>
+        <div class="revenue-bar-value">{{ format_price(stats.revenue) }}</div>
+        <div class="revenue-bar-count">{{ stats.count }}x</div>
+      </div>
+      {% endfor %}
+    {% elif barber_id %}
+      <div class="empty-state" style="padding:24px;">Filtrando por barbero seleccionado.</div>
+    {% else %}
+      <div class="empty-state" style="padding:24px;">Sin datos.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

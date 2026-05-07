@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Clientes — Stage & Shears{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="page-header-left">
+    <div class="page-label">Gestión</div>
+    <div class="page-title">Clientes</div>
+  </div>
+  <span class="badge badge-dark" style="padding:6px 14px;font-size:12px;">{{ client_stats | length }} clientes</span>
+</div>
+
+<!-- Search -->
+<form method="GET" action="{{ url_for('barber_clients') }}" class="search-bar" style="margin-bottom:24px;">
+  <input
+    type="text"
+    name="q"
+    value="{{ search }}"
+    class="search-input"
+    placeholder="Buscar por nombre o email..."
+  >
+  <button type="submit" class="search-btn">Buscar</button>
+  {% if search %}
+  <a href="{{ url_for('barber_clients') }}" class="btn btn-outline" style="border-left:none;">Limpiar</a>
+  {% endif %}
+</form>
+
+{% if client_stats %}
+  {% for item in client_stats %}
+  <div class="client-list-item">
+    <div class="avatar" style="background:#{{ '%06x' % (item.user.id * 1234567 % 0xFFFFFF) }};">
+      {{ item.user.name[:2].upper() }}
+    </div>
+    <div class="client-info">
+      <div class="client-name">{{ item.user.name }}</div>
+      <div class="client-email">{{ item.user.email }}</div>
+      <div class="client-stats-row">
+        <span>{{ item.completed }} cortes completados</span>
+        {% if item.last_appt %}
+        <span>Último: {{ item.last_appt.date.day }} {{ MONTHS_ES_UPPER[item.last_appt.date.month-1] }} {{ item.last_appt.date.year }}</span>
+        {% endif %}
+        {% if item.loyalty %}
+        <span>Fidelidad: {{ item.loyalty.total_cuts % 6 }}/6</span>
+        {% endif %}
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="text-align:right;">
+        <div style="font-size:20px;font-weight:800;">{{ item.total }}</div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#888;">turnos</div>
+      </div>
+      <a href="{{ url_for('barber_client_detail', client_id=item.user.id) }}" class="btn btn-outline btn-sm">Ver detalle →</a>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="card">
+    <div class="empty-state">
+      {% if search %}
+        No se encontraron clientes con "{{ search }}".
+        <a href="{{ url_for('barber_clients') }}" style="color:#E8302A;">Ver todos</a>
+      {% else %}
+        No hay clientes registrados todavía.
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% endblock %}
