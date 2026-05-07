@@ -1,0 +1,20 @@
+{
+  "folders": [
+	{
+		"name": "templates",
+		"path": "../../../../Downloads/Barberia-claude-barber-shop-scheduling-iapxR/Barberia-claude-barber-shop-scheduling-iapxR/templates"
+	},
+	{
+		"name": "Barberia",
+		"path": "."
+	},
+	{
+		"name": "static",
+		"path": "../../../../Downloads/Barberia-claude-barber-shop-scheduling-iapxR/Barberia-claude-barber-shop-scheduling-iapxR/static"
+	}
+],
+  "settings": {
+    "python-envs.defaultEnvManager": "ms-python.python:pipenv",
+    "liveServer.settings.multiRootWorkspaceName": "templates"
+  }
+}
